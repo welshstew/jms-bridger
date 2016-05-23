@@ -3,6 +3,8 @@
 printenv
 pwd
 ls /tmp
+ls /tmp/scripts
+ls /tmp/src
 
 # Global S2I variable setup
 source `dirname "$0"`/s2i-setup
