@@ -1,0 +1,1 @@
+amq.broker.url=tcp://localhost:61616amq.broker.username=adminamq.broker.password=password
