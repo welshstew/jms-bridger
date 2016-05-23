@@ -1,5 +1,7 @@
 #!/bin/bash
 
+printenv
+
 # Global S2I variable setup
 source `dirname "$0"`/s2i-setup
 
