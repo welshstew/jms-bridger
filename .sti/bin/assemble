@@ -28,7 +28,7 @@ function error_exit() {
 }
 
 echo "=================================================================="
-echo "Starting S2I Karaf Build ....."
+echo "Starting S2I Karaf Build ..... WITH CUSTOM STUFFS!"
 
 LOCAL_SOURCE_DIR="${S2I_SOURCE_DIR}"
 mkdir -p ${LOCAL_SOURCE_DIR}
