@@ -46,8 +46,11 @@ echo "Starting S2I Karaf Build ..... WITH CUSTOM STUFFS!"
 LOCAL_SOURCE_DIR="${S2I_SOURCE_DIR}"
 mkdir -p ${LOCAL_SOURCE_DIR}
 
-echo "contents of src dir...!"
+echo "contents of ${LOCAL_SOURCE_DIR} dir...!"
 ls ${LOCAL_SOURCE_DIR}
+
+echo "contents of ${LOCAL_SOURCE_DIR}/src dir...!"
+ls ${LOCAL_SOURCE_DIR}/src
 
 # Output will result in ${DEPLOYMENTS_DIR} folder
 mkdir -p ${DEPLOYMENTS_DIR}
