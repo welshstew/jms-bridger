@@ -127,7 +127,7 @@ fi
 echo "Copying shell stuff from ${LOCAL_SOURCE_DIR} into ${DEPLOYMENTS_DIR}..."
 
 mkdir -p ${DEPLOYMENTS_DIR}/shell
-cp ${LOCAL_SOURCE_DIR}/shell/* ${DEPLOYMENTS_DIR}/shell
+cp ${LOCAL_SOURCE_DIR}/shell ${DEPLOYMENTS_DIR}/shell
 
 # extract custom assembly to DEPLOY_DIR
 tar xzf "$KARAF_ASSEMBLY_ARCHIVE" -C ${DEPLOYMENTS_DIR}
