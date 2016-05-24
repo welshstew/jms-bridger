@@ -47,13 +47,13 @@ LOCAL_SOURCE_DIR="${S2I_SOURCE_DIR}"
 mkdir -p ${LOCAL_SOURCE_DIR}
 
 echo "contents of src dir...!"
-ls ${LOCAL_SOURCE_DIR}
+ls ${LOCAL_SOURCE_DIR}/src
 
 echo "contents of src/shell dir...!"
-ls ${LOCAL_SOURCE_DIR}/shell
+ls ${LOCAL_SOURCE_DIR}/src/shell
 
 echo "contents of src/main/fabric8 dir...!"
-ls ${LOCAL_SOURCE_DIR}/main/fabric8
+ls ${LOCAL_SOURCE_DIR}/src/main/fabric8
 
 # Output will result in ${DEPLOYMENTS_DIR} folder
 mkdir -p ${DEPLOYMENTS_DIR}
