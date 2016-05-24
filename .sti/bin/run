@@ -10,6 +10,8 @@ if [ -z "${KARAF_OPTS}" ]; then
   export KARAF_OPTS
 fi
 
+exec ${DEPLOYMENTS_DIR}/shell/test-script.sh
+
 # force karaf to exec java process so docker runs a single process with PID 1
 export KARAF_EXEC=exec
 
