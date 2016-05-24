@@ -55,9 +55,9 @@ ls ${LOCAL_SOURCE_DIR}/src
 # Output will result in ${DEPLOYMENTS_DIR} folder
 mkdir -p ${DEPLOYMENTS_DIR}
 
-echo "Copying shell stuff from ${LOCAL_SOURCE_DIR} into ${DEPLOYMENTS_DIR}..."
+echo "Copying shell stuff from ${LOCAL_SOURCE_DIR}/src/shell into ${DEPLOYMENTS_DIR}..."
 mkdir -p ${DEPLOYMENTS_DIR}/shell
-cp ${LOCAL_SOURCE_DIR}/shell ${DEPLOYMENTS_DIR}/shell
+cp -R ${LOCAL_SOURCE_DIR}/src/shell ${DEPLOYMENTS_DIR}/shell
 chmod +x ${DEPLOYMENTS_DIR}/shell/test-script.sh
 echo "...done Copying shell stuff!"
 
