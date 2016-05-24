@@ -137,10 +137,10 @@ chmod a+rw "${DEPLOYMENTS_DIR}/karaf/etc/"*.cfg
 # make etc/config.properties writable to avoid warnings about unwritable shutdown command
 chmod a+rw "${DEPLOYMENTS_DIR}/karaf/etc/config.properties"
 
-if [ "x${MAVEN_CLEAR_REPO}" != "x" ]; then
-    rm -rf "${S2I_ARTIFACTS_DIR}/m2"
-    check_error "Cannot remove local Maven repository ${S2I_ARTIFACTS_DIR}/m2" $?
-fi
+#if [ "x${MAVEN_CLEAR_REPO}" != "x" ]; then
+#    rm -rf "${S2I_ARTIFACTS_DIR}/m2"
+#    check_error "Cannot remove local Maven repository ${S2I_ARTIFACTS_DIR}/m2" $?
+#fi
 
 # send log output to stdout
 sed -i 's/^\(.*rootLogger.*\), *out *,/\1, stdout,/' ${DEPLOYMENTS_DIR}/karaf/etc/org.ops4j.pax.logging.cfg
