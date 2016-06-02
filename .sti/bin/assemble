@@ -142,6 +142,10 @@ mv /tmp/src/src/main/fabric8/test-script.sh ${DEPLOYMENTS_DIR}/shell/test-script
 chmod +x ${DEPLOYMENTS_DIR}/shell/test-script.sh
 echo "...done Copying shell stuff!"
 
+echo "overriding s2i run..."
+mv -f /tmp/scripts/run /usr/local/s2i/run
+echo "...done!"
+
 # extract custom assembly to DEPLOY_DIR
 tar xzf "$KARAF_ASSEMBLY_ARCHIVE" -C ${DEPLOYMENTS_DIR}
 KARAF_ASSEMBLY_DIR=${KARAF_ASSEMBLY_ARCHIVE%.tar.gz}
