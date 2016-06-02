@@ -14,9 +14,9 @@ function find_env() {
 configFileName=$(find_env "KARAF_ENV_CONFIG_FILE_NAME" "my.application.cfg")
 echo $configFileName
 
-export KARAF_ENV_APP_AMQ_BROKER_URL=tcp://localhost:61616
-export KARAF_ENV_APP_AMQ_BROKER_USERNAME=admin
-export KARAF_ENV_APP_AMQ_BROKER_PASSWORD=password
+#export KARAF_ENV_APP_AMQ_BROKER_URL=tcp://localhost:61616
+#export KARAF_ENV_APP_AMQ_BROKER_USERNAME=admin
+#export KARAF_ENV_APP_AMQ_BROKER_PASSWORD=password
 
 #env | grep KARAF_ENV_APP_
 
@@ -24,6 +24,5 @@ export KARAF_ENV_APP_AMQ_BROKER_PASSWORD=password
 # { gsub(/_/, "."); print }
 for i in $(env | grep KARAF_ENV_APP_ | awk {'print $1'}); do
     IFS='=' read -ra VARS <<< "$i";
-    echo "${VARS[0]}=${VARS[1]}" | awk  '{gsub("KARAF_ENV_APP_","",$0);gsub(/\_/,".",$0);printf tolower($0) "\r"}' >> "/Users/swinchester/$configFileName";
-
+    echo "${VARS[0]}=${VARS[1]}" | awk  '{gsub("KARAF_ENV_APP_","",$0);gsub(/\_/,".",$0);printf tolower($0) "\r"}' >> "/deployments/karaf/etc/${configFileName}";
 done

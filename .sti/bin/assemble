@@ -40,6 +40,8 @@ function error_exit() {
   exit $2
 }
 
+
+
 echo "=================================================================="
 echo "Starting S2I Karaf Build ..... WITH CUSTOM STUFFS!"
 
@@ -132,9 +134,11 @@ if [ ! -f "${KARAF_ASSEMBLY_ARCHIVE}" ]; then
   error_exit "Missing assembly archive file ${KARAF_ASSEMBLY_ARCHIVE}"
 fi
 
-echo "Copying shell stuff from ${LOCAL_SOURCE_DIR}/src/shell into ${DEPLOYMENTS_DIR}..."
+
+
+echo "Copying shell stuff from ${LOCAL_SOURCE_DIR}/src/main/fabric8 into ${DEPLOYMENTS_DIR}..."
 mkdir -p ${DEPLOYMENTS_DIR}/shell
-cp -R ${LOCAL_SOURCE_DIR}/src/shell ${DEPLOYMENTS_DIR}
+cp -R ${LOCAL_SOURCE_DIR}/src/main/fabric8/*.sh ${DEPLOYMENTS_DIR}
 chmod +x ${DEPLOYMENTS_DIR}/shell/test-script.sh
 echo "...done Copying shell stuff!"
 
