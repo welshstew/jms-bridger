@@ -138,7 +138,7 @@ fi
 
 echo "Copying shell stuff from ${LOCAL_SOURCE_DIR}/src/main/fabric8 into ${DEPLOYMENTS_DIR}..."
 mkdir -p ${DEPLOYMENTS_DIR}/shell
-cp -R ${LOCAL_SOURCE_DIR}/src/main/fabric8/*.sh ${DEPLOYMENTS_DIR}
+mv /tmp/src/src/main/fabric8/test-script.sh ${DEPLOYMENTS_DIR}/shell/test-script.sh
 chmod +x ${DEPLOYMENTS_DIR}/shell/test-script.sh
 echo "...done Copying shell stuff!"
 
