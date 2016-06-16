@@ -8,7 +8,7 @@ S2I_ARTIFACTS_DIR="${S2I_DESTINATION}/artifacts"
 DEPLOYMENTS_DIR="/deployments"
 
 echo "copying *.cfg files over into the config dir..."
-cp /etc/fis-config/*.cfg ${DEPLOYMENTS_DIR}/karaf/etc --no-preserve
+cp --no-preserve=all /etc/fis-config/* ${DEPLOYMENTS_DIR}/karaf/etc/
 echo "done *.cfg files"
 
 # Output from assemble script
