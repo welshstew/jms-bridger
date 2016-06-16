@@ -7,6 +7,9 @@ S2I_SOURCE_DIR="${S2I_DESTINATION}/src"
 S2I_ARTIFACTS_DIR="${S2I_DESTINATION}/artifacts"
 DEPLOYMENTS_DIR="/deployments"
 
+echo "copying *.cfg files over into the config dir..."
+cp /etc/fis-config/*.cfg ${DEPLOYMENTS_DIR}/karaf/etc --no-preserve
+echo "done *.cfg files"
 
 # Output from assemble script
 echo "Executing ${DEPLOYMENTS_DIR}/karaf/bin/karaf server ..."
@@ -14,8 +17,6 @@ if [ -z "${KARAF_OPTS}" ]; then
   KARAF_OPTS=$(/opt/jolokia/jolokia-opts)
   export KARAF_OPTS
 fi
-
-exec ${DEPLOYMENTS_DIR}/shell/test-script.sh
 
 # force karaf to exec java process so docker runs a single process with PID 1
 export KARAF_EXEC=exec
