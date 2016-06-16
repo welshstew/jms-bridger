@@ -7,7 +7,7 @@ metadata:
     description: "parent pom for jms bridger"
     fabric8.jms-bridge-kube/summary: "parent pom for jms bridger"
   labels: {}
-  name: "jms-bridge-kube"
+  name: "jms-bridge-dc"
 objects:
 - apiVersion: "v1"
   kind: "DeploymentConfig"

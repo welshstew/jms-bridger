@@ -5,9 +5,9 @@ labels: {}
 metadata:
   annotations:
     description: "jms-bridger bc"
-    fabric8.jms-bridge-kube/summary: "jms-bridger bc"
+    fabric8.jms-bridge-kube/summary: "jms-bridger-bc"
   labels: {}
-  name: "jms-bridger bc"
+  name: "jms-bridger-bc"
 objects:
 - apiVersion: "v1"
   kind: "ImageStream"
