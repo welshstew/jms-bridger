@@ -1,0 +1,184 @@
+{
+  "apiVersion" : "v1",
+  "kind" : "Template",
+  "labels" : { },
+  "metadata" : {
+    "annotations" : {
+      "description" : "parent pom for jms bridger",
+      "fabric8.jms-bridge-kube/summary" : "parent pom for jms bridger"
+    },
+    "labels" : { },
+    "name" : "jms-bridge-kube"
+  },
+  "objects" : [ {
+    "apiVersion" : "v1",
+    "kind" : "ImageStream",
+    "metadata" : {
+      "annotations" : { },
+      "labels" : {
+        "project" : "jms-bridge-kube",
+        "provider" : "fabric8",
+        "version" : "1.0.0.SNAPSHOT",
+        "group" : "org.swinchester"
+      },
+      "name" : "jms-bridge-kube"
+    },
+    "spec" : {
+      "dockerImageRepository" : "${REGISTRY}/${IS_PULL_NAMESPACE}/jms-bridge",
+      "tags" : [ {
+        "annotations" : {
+          "tags" : "${IS_TAG}"
+        },
+        "from" : {
+          "kind" : "ImageStreamTag",
+          "name" : "jms-bridge"
+        },
+        "name" : "${IS_TAG}"
+      } ]
+    }
+  }, {
+    "apiVersion" : "v1",
+    "kind" : "BuildConfig",
+    "metadata" : {
+      "annotations" : { },
+      "labels" : {
+        "app" : "jms-bridge",
+        "project" : "jms-bridge",
+        "version" : "1.0.0-SNAPSHOT",
+        "group" : "swinchester"
+      },
+      "name" : "jms-bridge"
+    },
+    "spec" : {
+      "output" : {
+        "to" : {
+          "kind" : "ImageStreamTag",
+          "name" : "jms-bridge:${IS_TAG}"
+        }
+      },
+      "source" : {
+        "contextDir" : "jms-bridge",
+        "git" : {
+          "uri" : "https://github.com/welshstew/jms-bridger.git"
+        },
+        "images" : [ ],
+        "secrets" : [ ],
+        "type" : "Git"
+      },
+      "strategy" : {
+        "sourceStrategy" : {
+          "env" : [ ],
+          "from" : {
+            "kind" : "ImageStreamTag",
+            "name" : "fis-karaf-openshift:1.0",
+            "namespace" : "openshift"
+          }
+        },
+        "type" : "Source"
+      },
+      "triggers" : [ {
+        "type" : "ImageChange"
+      } ]
+    }
+  }, {
+    "apiVersion" : "v1",
+    "kind" : "DeploymentConfig",
+    "metadata" : {
+      "annotations" : {
+        "fabric8.io/git-commit" : "be293ce68acb1f0e8a209799ca8a69758c9dbf02",
+        "fabric8.io/git-branch" : "master"
+      },
+      "labels" : {
+        "project" : "jms-bridge-kube",
+        "provider" : "fabric8",
+        "version" : "1.0.0.SNAPSHOT",
+        "group" : "org.swinchester"
+      },
+      "name" : "jms-bridge"
+    },
+    "spec" : {
+      "replicas" : 1,
+      "selector" : {
+        "deploymentconfig" : "jms-bridge"
+      },
+      "strategy" : {
+        "annotations" : { },
+        "labels" : { },
+        "type" : "Recreate"
+      },
+      "template" : {
+        "metadata" : {
+          "annotations" : { },
+          "labels" : {
+            "deploymentconfig" : "jms-bridge",
+            "component" : "jms-bridge"
+          }
+        },
+        "spec" : {
+          "containers" : [ {
+            "args" : [ ],
+            "command" : [ ],
+            "env" : [ {
+              "name" : "KUBERNETES_NAMESPACE",
+              "valueFrom" : {
+                "fieldRef" : {
+                  "fieldPath" : "metadata.namespace"
+                }
+              }
+            }, {
+              "name" : "AMQ_PERSISTENCE_TYPE",
+              "value" : "${AMQ_PERSISTENCE_TYPE}"
+            } ],
+            "image" : "${IS_PULL_NAMESPACE}/jms-bridge:${IS_TAG}",
+            "imagePullPolicy" : "Always",
+            "name" : "jms-bridge",
+            "ports" : [ {
+              "containerPort" : 8778,
+              "name" : "jolokia",
+              "protocol" : "TCP"
+            } ],
+            "volumeMounts" : [ {
+              "mountPath" : "fis-config",
+              "name" : "/etc/fis-config",
+              "readOnly" : true
+            } ]
+          } ],
+          "imagePullSecrets" : [ ],
+          "nodeSelector" : { },
+          "restartPolicy" : "Always",
+          "volumes" : [ {
+            "configMap" : {
+              "items" : [ ],
+              "name" : "karaf-configmap"
+            },
+            "name" : "fis-config"
+          } ]
+        }
+      },
+      "triggers" : [ {
+        "type" : "ConfigChange"
+      }, {
+        "imageChangeParams" : {
+          "automatic" : true,
+          "containerNames" : [ "jms-bridge" ],
+          "from" : {
+            "kind" : "ImageStreamTag",
+            "name" : "jms-bridge:${IS_TAG}",
+            "namespace" : "${IS_PULL_NAMESPACE}"
+          }
+        },
+        "type" : "ImageChange"
+      } ]
+    }
+  } ],
+  "parameters" : [ {
+    "name" : "IS_TAG",
+    "value" : "latest"
+  }, {
+    "name" : "REGISTRY",
+    "value" : "172.30.233.53:5000"
+  }, {
+    "name" : "IS_PULL_NAMESPACE",
+    "value" : "build"
+  } ]
+}

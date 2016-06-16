@@ -1,0 +1,81 @@
+---
+apiVersion: "v1"
+kind: "Template"
+labels: {}
+metadata:
+  annotations:
+    fabric8.jms-bridge/summary: "Camel route using ActiveMQ in Karaf container"
+    description: "Camel route using ActiveMQ in Karaf container"
+    fabric8.jms-bridge/iconUrl: "img/icons/camel.svg"
+  labels: {}
+  name: "jms-bridge"
+objects:
+- apiVersion: "v1"
+  kind: "ReplicationController"
+  metadata:
+    annotations:
+      fabric8.io/git-branch: "master"
+      fabric8.io/git-commit: "be293ce68acb1f0e8a209799ca8a69758c9dbf02"
+    labels:
+      container: "karaf"
+      component: "jms-bridge"
+      provider: "fabric8"
+      project: "jms-bridge"
+      version: "1.0.0.SNAPSHOT"
+      group: "quickstarts"
+    name: "jms-bridge"
+  spec:
+    replicas: 1
+    selector:
+      container: "karaf"
+      component: "jms-bridge"
+      provider: "fabric8"
+      project: "jms-bridge"
+      version: "1.0.0.SNAPSHOT"
+      group: "quickstarts"
+    template:
+      metadata:
+        annotations: {}
+        labels:
+          container: "karaf"
+          component: "jms-bridge"
+          provider: "fabric8"
+          project: "jms-bridge"
+          version: "1.0.0.SNAPSHOT"
+          group: "quickstarts"
+      spec:
+        containers:
+        - args: []
+          command: []
+          env:
+          - name: "KARAF_ENV_APP_AMQ_USERNAME"
+            value: "admin"
+          - name: "KARAF_ENV_CONFIG_FILE_NAME"
+            value: ""
+          - name: "KARAF_ENV_APP_SIMULATE_PROCESSING_ERROR"
+            value: "true"
+          - name: "KARAF_ENV_APP_AMQ_SOURCE_BROKER_URL"
+            value: "failover:(tcp://broker-amq-tcp.source:61616)?jms.prefetchPolicy.all=1"
+          - name: "KARAF_ENV_APP_ERROR_AFTER_MSGS"
+            value: "5"
+          - name: "KARAF_ENV_APP_AMQ_TARGET_BROKER_URL"
+            value: "failover:(tcp://broker-amq-tcp.target:61616)"
+          - name: "KARAF_ENV_APP_AMQ_PASSWORD"
+            value: "admin"
+          - name: "KUBERNETES_NAMESPACE"
+            valueFrom:
+              fieldRef:
+                fieldPath: "metadata.namespace"
+          image: "fabric8/jms-bridge:1.0.0.SNAPSHOT"
+          name: "jms-bridge"
+          ports:
+          - containerPort: 8181
+            name: "http"
+          - containerPort: 8778
+            name: "jolokia"
+          securityContext: {}
+          volumeMounts: []
+        imagePullSecrets: []
+        nodeSelector: {}
+        volumes: []
+parameters: []

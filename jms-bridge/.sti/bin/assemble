@@ -136,15 +136,15 @@ fi
 
 
 
-echo "Copying shell stuff from ${LOCAL_SOURCE_DIR}/src/main/fabric8 into ${DEPLOYMENTS_DIR}..."
-mkdir -p ${DEPLOYMENTS_DIR}/shell
-mv /tmp/src/src/main/fabric8/test-script.sh ${DEPLOYMENTS_DIR}/shell/test-script.sh
-chmod +x ${DEPLOYMENTS_DIR}/shell/test-script.sh
-echo "...done Copying shell stuff!"
+#echo "Copying shell stuff from ${LOCAL_SOURCE_DIR}/src/main/fabric8 into ${DEPLOYMENTS_DIR}..."
+#mkdir -p ${DEPLOYMENTS_DIR}/shell
+#mv /tmp/src/src/main/fabric8/test-script.sh ${DEPLOYMENTS_DIR}/shell/test-script.sh
+#chmod +x ${DEPLOYMENTS_DIR}/shell/test-script.sh
+#echo "...done Copying shell stuff!"
 
-echo "overriding s2i run..."
-mv -f /tmp/scripts/run /usr/local/s2i/run
-echo "...done!"
+#echo "overriding s2i run..."
+#mv -f /tmp/scripts/run /usr/local/s2i/run
+#echo "...done!"
 
 # extract custom assembly to DEPLOY_DIR
 tar xzf "$KARAF_ASSEMBLY_ARCHIVE" -C ${DEPLOYMENTS_DIR}

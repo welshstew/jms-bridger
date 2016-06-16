@@ -1,0 +1,69 @@
+---
+apiVersion: "v1"
+kind: "Template"
+labels: {}
+metadata:
+  annotations:
+    description: "jms-bridger bc"
+    fabric8.jms-bridge-kube/summary: "jms-bridger bc"
+  labels: {}
+  name: "jms-bridger bc"
+objects:
+- apiVersion: "v1"
+  kind: "ImageStream"
+  metadata:
+    annotations: {}
+    labels:
+      project: "jms-bridge-kube"
+      provider: "fabric8"
+      version: "1.0.0.SNAPSHOT"
+      group: "org.swinchester"
+    name: "jms-bridge-kube"
+  spec:
+    dockerImageRepository: "${REGISTRY}/${IS_PULL_NAMESPACE}/jms-bridge"
+    tags:
+    - annotations:
+        tags: "${IS_TAG}"
+      from:
+        kind: "ImageStreamTag"
+        name: "jms-bridge"
+      name: "${IS_TAG}"
+- apiVersion: "v1"
+  kind: "BuildConfig"
+  metadata:
+    annotations: {}
+    labels:
+      app: "jms-bridge"
+      project: "jms-bridge"
+      version: "1.0.0-SNAPSHOT"
+      group: "swinchester"
+    name: "jms-bridge"
+  spec:
+    output:
+      to:
+        kind: "ImageStreamTag"
+        name: "jms-bridge:${IS_TAG}"
+    source:
+      contextDir: "jms-bridge"
+      git:
+        uri: "https://github.com/welshstew/jms-bridger.git"
+      images: []
+      secrets: []
+      type: "Git"
+    strategy:
+      sourceStrategy:
+        env: []
+        from:
+          kind: "ImageStreamTag"
+          name: "fis-karaf-openshift:1.0"
+          namespace: "openshift"
+      type: "Source"
+    triggers:
+    - type: "ImageChange"
+parameters:
+- name: "IS_TAG"
+  value: "latest"
+- name: "REGISTRY"
+  value: "172.30.125.205:5000"
+- name: "IS_PULL_NAMESPACE"
+  value: "build"

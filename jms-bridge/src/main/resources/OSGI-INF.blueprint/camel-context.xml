@@ -8,12 +8,12 @@
 
   <cm:property-placeholder id="config" persistent-id="jms.bridger" update-strategy="reload">
     <cm:default-properties>
-      <cm:property name="simulateProcessingError" value="${simulate.processing.error}" />
-      <cm:property name="errorAfterMsgs" value="${error.after.messages}" />
+      <cm:property name="simulateProcessingError" value="false" />
+      <cm:property name="errorAfterMsgs" value="0" />
       <cm:property name="sourceBrokerUrl" value="${amq.source.broker.url}" />
       <cm:property name="targetBrokerUrl" value="${amq.target.broker.url}" />
-      <cm:property name="username" value="${amq.username}}" />
-      <cm:property name="password" value="${amq.password}}" />
+      <cm:property name="username" value="${amq.username}" />
+      <cm:property name="password" value="${amq.password}" />
     </cm:default-properties>
   </cm:property-placeholder>
 

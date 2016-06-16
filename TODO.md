@@ -10,3 +10,10 @@ oc new-app https://github.com/welshstew/jms-bridger.git -e KARAF_ENV_CONFIG_FILE
       <cm:property name="targetBrokerUrl" value="${amq.target.broker.url}" />
       <cm:property name="username" value="${amq.username}}" />
       <cm:property name="password" value="${amq.password}}" />
+      
+      
+      
+## Now using a local environment  resolves
+
+
+What i have done is to add .cfg files as secrets and then mount them into the container. I also override the default run S2I script to copy all files from the mounted directory into the karaf etc folder. Be sure to strip off ownership information from the files when copying (--no-preserve=all) since they are mounted into the container as root and karaf will be unable to modify them when the fileinstall component discovers them. In OpenShift 3.2, it will be easier to set up these types of configurations using ConfigMap’s [1] , but until then, this is the best that I have found to work.
