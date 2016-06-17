@@ -7,7 +7,7 @@
     <packaging>bundle</packaging>
     <groupId>org.swinchester</groupId>
     <artifactId>jms-bridge</artifactId>
-    <version>1.0.0.SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
 
     <name>Fabric8 :: Quickstarts :: Karaf :: Camel and ActiveMQ</name>
     <description>Camel route using ActiveMQ in Karaf container</description>
@@ -64,30 +64,6 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <type>jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-camel</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
-
 
         <!-- Karaf microcontainer dependencies -->
         <dependency>
@@ -140,8 +116,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>io.fabric8.mq.core,
-                            io.fabric8.mq.camel,
+                        <Import-Package>
                             org.apache.activemq.pool,
                             *</Import-Package>
                     </instructions>
@@ -199,9 +174,6 @@
                             <goal>assembly</goal>
                         </goals>
                         <phase>install</phase>
-                        <configuration>
-                            <featuresCfgFile></featuresCfgFile>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>karaf-archive</id>
@@ -225,14 +197,14 @@
                         <feature>jaas</feature>
                         <feature>aries-blueprint</feature>
                         <feature>camel-blueprint</feature>
+                        <feature>transaction</feature>
                         <feature>camel-jms</feature>
                         <feature>activemq-camel</feature>
-                        <feature>transaction</feature>
                     </startupFeatures>
                     <startupBundles>
-                        <bundle>mvn:io.fabric8.mq/camel-amq/${fabric8.version}</bundle>
-                        <bundle>mvn:io.fabric8.mq/mq-client/${fabric8.version}</bundle>
-                        <bundle>mvn:io.fabric8/fabric8-utils/${fabric8.version}</bundle>
+                        <!--<bundle>mvn:io.fabric8.mq/camel-amq/${fabric8.version}</bundle>-->
+                        <!--<bundle>mvn:io.fabric8.mq/mq-client/${fabric8.version}</bundle>-->
+                        <!--<bundle>mvn:io.fabric8/fabric8-utils/${fabric8.version}</bundle>-->
                         <bundle>mvn:${project.groupId}/${project.artifactId}/${project.version}</bundle>
                     </startupBundles>
                 </configuration>
