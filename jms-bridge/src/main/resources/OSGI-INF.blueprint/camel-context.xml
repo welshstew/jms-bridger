@@ -10,10 +10,10 @@
     <cm:default-properties>
       <cm:property name="simulateProcessingError" value="false" />
       <cm:property name="errorAfterMsgs" value="0" />
-      <cm:property name="sourceBrokerUrl" value="${amq.source.broker.url}" />
-      <cm:property name="targetBrokerUrl" value="${amq.target.broker.url}" />
-      <cm:property name="username" value="${amq.username}" />
-      <cm:property name="password" value="${amq.password}" />
+      <cm:property name="sourceBrokerUrl" value="tcp://localhost:61616" />
+      <cm:property name="targetBrokerUrl" value="tcp://localhost:61616" />
+      <cm:property name="username" value="admin" />
+      <cm:property name="password" value="admin" />
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -39,9 +39,9 @@
   </bean>
 
   <bean id="AmqXaCF" class="org.apache.activemq.ActiveMQXAConnectionFactory">
-    <property name="brokerURL" value="${sourceBrokerUrl}" />
-    <property name="userName" value="${username}" />
-    <property name="password" value="${password}" />
+    <property name="brokerURL" value="{{sourceBrokerUrl}}" />
+    <property name="userName" value="{{username}}" />
+    <property name="password" value="{{password}}" />
     <property name="redeliveryPolicy" ref="redeliveryPolicy" />
   </bean>
 
@@ -67,8 +67,8 @@
     <property name="transactionManager" ref="recoverableTxManager" />
     <!-- CF must be of type ActiveMQConnectionFactory, otherwise no recovery will occur -->
     <property name="connectionFactory" ref="AmqXaCF" />
-    <property name="userName" value="${username}" />
-    <property name="password" value="${password}" />
+    <property name="userName" value="{{username}}" />
+    <property name="password" value="{{password}}" />
     <!-- name needs to match name property set on JcaPooledConnectionFactory above -->
     <property name="resourceName" value="activemq.source" />
   </bean>
@@ -81,9 +81,9 @@
   <!-- ***************************************************************** -->
   <!-- Target ActiveMQ Configuration -->
   <bean id="AmqXaCF-2" class="org.apache.activemq.ActiveMQXAConnectionFactory">
-    <property name="brokerURL" value="${targetBrokerUrl}" />
-    <property name="userName" value="${username}" />
-    <property name="password" value="${password}" />
+    <property name="brokerURL" value="{{targetBrokerUrl}}" />
+    <property name="userName" value="{{username}}" />
+    <property name="password" value="{{password}}" />
     <property name="redeliveryPolicy" ref="redeliveryPolicy" />
   </bean>
 
@@ -109,8 +109,8 @@
     <property name="transactionManager" ref="recoverableTxManager" />
     <!-- CF must be of type ActiveMQConnectionFactory, otherwise no recovery will occur -->
     <property name="connectionFactory" ref="AmqXaCF-2" />
-    <property name="userName" value="${username}" />
-    <property name="password" value="${password}" />
+    <property name="userName" value="{{username}}" />
+    <property name="password" value="{{password}}" />
     <!-- name needs to match name property set on JcaPooledConnectionFactory above -->
     <property name="resourceName" value="activemq.target" />
   </bean>
@@ -125,8 +125,8 @@
        Can be used to simulate tx rollback
   -->
   <bean class="org.apache.camel.demo.TestProcessor" id="testProcessor" >
-    <property name="simulateProcessingError" value="${simulateProcessingError}" />
-    <property name="errorAfterMsgs" value="${errorAfterMsgs}" />
+    <property name="simulateProcessingError" value="{{simulateProcessingError}}" />
+    <property name="errorAfterMsgs" value="{{errorAfterMsgs}}" />
   </bean>
 
 
