@@ -151,7 +151,7 @@
                             org.osgi.service.blueprint,
                             org.slf4j,
                             org.springframework.transaction</Import-Package>
-                        <Export-Package></Export-Package>
+                        <Export-Package>org.swinchester</Export-Package>
                         <Private-Package>org.apache.camel.demo</Private-Package>
                     </instructions>
                 </configuration>
