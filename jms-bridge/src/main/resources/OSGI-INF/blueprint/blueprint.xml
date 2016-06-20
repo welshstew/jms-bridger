@@ -130,17 +130,12 @@
   </bean>
 
 
+  <bean class="org.swinchester.QueueToQueueRouteBuilder" id="q2qrb" />
 
   <!-- ***************************************************************** -->
   <!-- Camel Route Definition -->
   <camelContext xmlns="http://camel.apache.org/schema/blueprint" trace="true">
-    <route id="jms-jms-xa" trace="false">
-      <from uri="activemq:queue:jms-xa-demo.in" />
-      <transacted ref="requiredJta"/>
-      <log message="Received msg with JMSRedelivered:${header.JMSRedelivered}" />
-      <process ref="testProcessor" />
-      <to uri="activemq-2:queue:jms-xa-demo.out" />
-    </route>
+    <routeBuilder ref="q2qrb" />
   </camelContext>
 
   <!--<camelContext id="log-example-context" xmlns="http://camel.apache.org/schema/blueprint" >-->
