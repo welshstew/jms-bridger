@@ -145,6 +145,8 @@
                             org.apache.activemq.camel.component,
                             org.apache.activemq.pool,
                             org.apache.camel,
+                            org.apache.camel.builder,
+                            org.apache.camel.model,
                             org.apache.camel.component.jms,
                             org.apache.camel.spring.spi,
                             org.apache.geronimo.transaction.manager,
