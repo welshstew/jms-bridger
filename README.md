@@ -11,8 +11,21 @@ The hard stuff was:
 
 ## Openshift Stuff
 
+	# create two amq's
+	oc create -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/amq/amq62-persistent.json
+
+	oc new-app -p APPLICATION_NAME=source \
+	-p MQ_USERNAME=admin \
+	-p MQ_PASSWORD=admin \
+	--template=amq62-persistent
+
+	oc new-app -p APPLICATION_NAME=target \
+	-p MQ_USERNAME=admin \
+	-p MQ_PASSWORD=admin \
+	--template=amq62-persistent
+
 	#create configmaps
-	oc create configmap karaf-configmap kube/jms.bridger.cfg
+	oc create configmap karaf-configmap --from-file=kube/jms.bridger.cfg
 
 	#create fis image stream
 	oc create -f kube/fis-karaf-openshift-is.yaml

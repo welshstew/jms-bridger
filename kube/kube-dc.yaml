@@ -16,7 +16,7 @@ objects:
       fabric8.io/git-commit: "be293ce68acb1f0e8a209799ca8a69758c9dbf02"
       fabric8.io/git-branch: "master"
     labels:
-      project: "jms-bridge-kube"
+      project: "jms-bridge"
       provider: "fabric8"
       version: "1.0.0.SNAPSHOT"
       group: "org.swinchester"
@@ -54,8 +54,8 @@ objects:
             name: "jolokia"
             protocol: "TCP"
           volumeMounts:
-          - mountPath: "fis-config"
-            name: "/etc/fis-config"
+          - mountPath: "/etc/fis-config"
+            name: "fis-config"
             readOnly: true
         imagePullSecrets: []
         nodeSelector: {}

@@ -14,11 +14,11 @@ objects:
   metadata:
     annotations: {}
     labels:
-      project: "jms-bridge-kube"
+      project: "jms-bridge"
       provider: "fabric8"
       version: "1.0.0.SNAPSHOT"
       group: "org.swinchester"
-    name: "jms-bridge-kube"
+    name: "jms-bridge"
   spec:
     dockerImageRepository: "${REGISTRY}/${IS_PULL_NAMESPACE}/jms-bridge"
     tags:
@@ -64,6 +64,6 @@ parameters:
 - name: "IS_TAG"
   value: "latest"
 - name: "REGISTRY"
-  value: "172.30.125.205:5000"
+  value: "172.30.246.34:5000"
 - name: "IS_PULL_NAMESPACE"
   value: "build"

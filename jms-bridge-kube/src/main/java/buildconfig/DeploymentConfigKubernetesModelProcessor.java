@@ -75,7 +75,7 @@ public class DeploymentConfigKubernetesModelProcessor {
 
     private List<VolumeMount> getVolumeMounts(){
             return new ImmutableList.Builder<VolumeMount>()
-                    .add(new VolumeMount(ConfigParameters.CONFIGMAP_VOLUME_NAME,ConfigParameters.CONFIGMAP_VOLUME_MOUNT_DIR,true))
+                    .add(new VolumeMount(ConfigParameters.CONFIGMAP_VOLUME_MOUNT_DIR, ConfigParameters.CONFIGMAP_VOLUME_NAME,true))
                     .build();
     }
 
