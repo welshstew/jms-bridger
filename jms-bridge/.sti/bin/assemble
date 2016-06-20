@@ -1,11 +1,5 @@
 #!/bin/bash
 
-printenv
-pwd
-ls /tmp
-ls /tmp/scripts
-ls /tmp/src
-
 # Global S2I variable setup
 # source `dirname "$0"`/s2i-setup
 
@@ -43,16 +37,16 @@ function error_exit() {
 
 
 echo "=================================================================="
-echo "Starting S2I Karaf Build ..... WITH CUSTOM STUFFS!"
+echo "Starting S2I Karaf Build ..... WITH CUSTOM s2i!"
 
 LOCAL_SOURCE_DIR="${S2I_SOURCE_DIR}"
 mkdir -p ${LOCAL_SOURCE_DIR}
 
-echo "contents of ${LOCAL_SOURCE_DIR} dir...!"
-ls ${LOCAL_SOURCE_DIR}
+#echo "contents of ${LOCAL_SOURCE_DIR} dir...!"
+#ls ${LOCAL_SOURCE_DIR}
 
-echo "contents of ${LOCAL_SOURCE_DIR}/src dir...!"
-ls ${LOCAL_SOURCE_DIR}/src
+#echo "contents of ${LOCAL_SOURCE_DIR}/src dir...!"
+#ls ${LOCAL_SOURCE_DIR}/src
 
 # Output will result in ${DEPLOYMENTS_DIR} folder
 mkdir -p ${DEPLOYMENTS_DIR}
@@ -135,13 +129,12 @@ if [ ! -f "${KARAF_ASSEMBLY_ARCHIVE}" ]; then
 fi
 
 
-
+# Leaving this in here as a placehold to show that you COULD do extra stuff if you wanted to...!
 #echo "Copying shell stuff from ${LOCAL_SOURCE_DIR}/src/main/fabric8 into ${DEPLOYMENTS_DIR}..."
 #mkdir -p ${DEPLOYMENTS_DIR}/shell
 #mv /tmp/src/src/main/fabric8/test-script.sh ${DEPLOYMENTS_DIR}/shell/test-script.sh
 #chmod +x ${DEPLOYMENTS_DIR}/shell/test-script.sh
 #echo "...done Copying shell stuff!"
-
 #echo "overriding s2i run..."
 #mv -f /tmp/scripts/run /usr/local/s2i/run
 #echo "...done!"
