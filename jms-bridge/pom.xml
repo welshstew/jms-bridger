@@ -9,7 +9,7 @@
     <artifactId>jms-bridge</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Fabric8 :: Quickstarts :: Karaf :: Camel and ActiveMQ</name>
+    <name>camel-xa-tx-example-jms-bridge</name>
     <description>Camel route using ActiveMQ in Karaf container</description>
 
     <properties>
@@ -30,8 +30,11 @@
         <fabric8.env.KARAF_ENV_CONFIG_FILE_NAME></fabric8.env.KARAF_ENV_CONFIG_FILE_NAME>
         <fabric8.env.KARAF_ENV_APP_SIMULATE_PROCESSING_ERROR>true</fabric8.env.KARAF_ENV_APP_SIMULATE_PROCESSING_ERROR>
         <fabric8.env.KARAF_ENV_APP_ERROR_AFTER_MSGS>5</fabric8.env.KARAF_ENV_APP_ERROR_AFTER_MSGS>
-        <fabric8.env.KARAF_ENV_APP_AMQ_SOURCE_BROKER_URL>failover:(tcp://broker-amq-tcp.source:61616)?jms.prefetchPolicy.all=1</fabric8.env.KARAF_ENV_APP_AMQ_SOURCE_BROKER_URL>
-        <fabric8.env.KARAF_ENV_APP_AMQ_TARGET_BROKER_URL>failover:(tcp://broker-amq-tcp.target:61616)</fabric8.env.KARAF_ENV_APP_AMQ_TARGET_BROKER_URL>
+        <fabric8.env.KARAF_ENV_APP_AMQ_SOURCE_BROKER_URL>
+            failover:(tcp://broker-amq-tcp.source:61616)?jms.prefetchPolicy.all=1
+        </fabric8.env.KARAF_ENV_APP_AMQ_SOURCE_BROKER_URL>
+        <fabric8.env.KARAF_ENV_APP_AMQ_TARGET_BROKER_URL>failover:(tcp://broker-amq-tcp.target:61616)
+        </fabric8.env.KARAF_ENV_APP_AMQ_TARGET_BROKER_URL>
         <fabric8.env.KARAF_ENV_APP_AMQ_USERNAME>admin</fabric8.env.KARAF_ENV_APP_AMQ_USERNAME>
         <fabric8.env.KARAF_ENV_APP_AMQ_PASSWORD>admin</fabric8.env.KARAF_ENV_APP_AMQ_PASSWORD>
     </properties>
@@ -63,6 +66,18 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-camel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
         </dependency>
 
         <!-- Karaf microcontainer dependencies -->
@@ -116,9 +131,28 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>
+                        <Bundle-Blueprint>
+                            OSGI-INF/blueprint/blueprint.xml
+                        </Bundle-Blueprint>
+                        <Import-Service>
+                            org.apache.geronimo.transaction.manager.RecoverableTransactionManager;multiple:=false,
+                            org.springframework.transaction.PlatformTransactionManager;multiple:=false
+                        </Import-Service>
+                        <Require-Capability>
+                            osgi.ee;filter:=(&amp;(osgi.ee=JavaSE)(version=1.6))
+                        </Require-Capability>
+                        <Import-Package>org.apache.activemq,
+                            org.apache.activemq.camel.component,
                             org.apache.activemq.pool,
-                            *</Import-Package>
+                            org.apache.camel,
+                            org.apache.camel.component.jms,
+                            org.apache.camel.spring.spi,
+                            org.apache.geronimo.transaction.manager,
+                            org.osgi.service.blueprint,
+                            org.slf4j,
+                            org.springframework.transaction</Import-Package>
+                        <Export-Package></Export-Package>
+                        <Private-Package>org.apache.camel.demo</Private-Package>
                     </instructions>
                 </configuration>
             </plugin>
@@ -224,12 +258,15 @@
                                 <assembly>
                                     <basedir>/deployments</basedir>
                                     <user>jboss:jboss:jboss</user>
-                                    <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+                                    <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+                                            xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
                                         <id>${project.artifactId}</id>
                                         <files>
                                             <!-- copy karaf archive -->
                                             <file>
-                                                <source>${project.build.directory}/${project.artifactId}-${project.version}.tar.gz</source>
+                                                <source>
+                                                    ${project.build.directory}/${project.artifactId}-${project.version}.tar.gz
+                                                </source>
                                                 <outputDirectory>/</outputDirectory>
                                             </file>
                                         </files>
