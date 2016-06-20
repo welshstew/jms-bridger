@@ -7,7 +7,10 @@ S2I_SOURCE_DIR="${S2I_DESTINATION}/src"
 S2I_ARTIFACTS_DIR="${S2I_DESTINATION}/artifacts"
 DEPLOYMENTS_DIR="/deployments"
 
-echo "copying *.cfg files over into the config dir..." - custom --no-preserve=all as recommended by mr. ablock. :)
+# - custom --no-preserve=all as recommended by mr. ablock. :)
+# we need to do this so that karaf can actually read the cfg file under the jboss user permissions
+
+echo "copying *.cfg files over into the config dir..."
 cp --no-preserve=all /etc/fis-config/*.cfg /deployments/karaf/etc/
 echo "done *.cfg files"
 
